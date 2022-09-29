@@ -15,13 +15,11 @@ export default function todoItem({ initialTodo }) {
 
   const router = useRouter();
   const id = router.query.id;
+
   const rec = initialTodo.find((Record) => Record.id === id);
   const [detailedDesc, setDetailedDesc] = useState(
     rec.fields.detailedDescription
   );
-
-  const arr = [rec.fields.description, rec.fields.detailedDescription];
-  console.log(arr, "array of fields");
 
   const handleFormSubmit = (e) => {
     e.preventDefault();

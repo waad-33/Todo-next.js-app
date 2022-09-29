@@ -4,6 +4,7 @@ const TodosContext = createContext();
 
 const TodosProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
+  const [servers, setServers] = useState([]);
 
   const refreshTodos = async () => {
     try {
@@ -62,7 +63,7 @@ const TodosProvider = ({ children }) => {
     try {
       await fetch("/api/deleteTodo", {
         method: "Delete",
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ id: id }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -74,15 +75,51 @@ const TodosProvider = ({ children }) => {
     }
   };
 
+  const addServer = async (name, location, customer) => {
+    try {
+      const res = await fetch("/api/createServer", {
+        method: "POST",
+        body: JSON.stringify({ name, location, customer: [customer] }),
+        headers: { "Content-type": "application/json" },
+      });
+      const newServer = await res.json();
+      setServers((prevServer) => {
+        const updatedServer = [newServer, ...prevServer];
+        return updatedServer;
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteServer = async (id) => {
+    try {
+      await fetch("api/deleteServer", {
+        method: "Delete",
+        body: JSON.stringify({ id: id }),
+        headers: { "Content-Type": "application/json" },
+      });
+      setServers((prevServers) => {
+        return prevServers.filter((server) => server.id !== id);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <TodosContext.Provider
       value={{
         todos,
         setTodos,
+        servers,
+        setServers,
         refreshTodos,
         updateTodo,
         deleteTodo,
         addTodo,
+        addServer,
+        deleteServer,
       }}
     >
       {children}

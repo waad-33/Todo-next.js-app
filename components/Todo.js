@@ -4,6 +4,7 @@ import { TodosContext } from "../contexts/TodosContext";
 
 export default function Todo({ todo }) {
   const { updateTodo, deleteTodo } = useContext(TodosContext);
+  console.log(typeof todo.id);
 
   const handleToggleCompleted = () => {
     const updatedFields = {

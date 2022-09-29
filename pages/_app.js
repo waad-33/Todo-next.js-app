@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import "../styles/index.css";
-import Layout from "../components/Layout";
+
 import { TodosProvider } from "../contexts/TodosContext";
 import { UserProvider } from "@auth0/nextjs-auth0";
 
@@ -9,9 +9,7 @@ function MyApp({ Component, pageProps }) {
     <UserProvider>
       <TodosProvider>
         <div className="container mx-auto my-10 max-w-xl">
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Component {...pageProps} />
         </div>
       </TodosProvider>
     </UserProvider>

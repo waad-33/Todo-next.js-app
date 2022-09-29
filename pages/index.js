@@ -6,7 +6,6 @@ import { TodosContext } from "../contexts/TodosContext";
 import React, { useEffect, useContext } from "react";
 import TodoForm from "../components/TodoForm";
 import { useUser } from "@auth0/nextjs-auth0";
-import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 import auth0 from "./api/utils/auth0";
 
 export default function Home({ initialTodos, user }) {
@@ -29,6 +28,7 @@ export default function Home({ initialTodos, user }) {
       </Head>
 
       <main>
+        <Navbar title="todos" />
         <h1 className="text-2xl text-center mb-4 mt-4">My Todos</h1>
 
         {user ? (
@@ -48,6 +48,7 @@ export default function Home({ initialTodos, user }) {
 
 export async function getServerSideProps(context) {
   const session = await auth0.getSession(context.req, context.res);
+  console.log(session);
   let todos = [];
 
   try {
